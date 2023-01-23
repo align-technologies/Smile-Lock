@@ -30,7 +30,7 @@ open class PasswordInputView: UIView {
     @IBInspectable
     open var numberString = "2" {
         didSet {
-            label.text = numberString
+            label.text = numberString == "" ? "0" : numberString
         }
     }
     
@@ -77,7 +77,7 @@ open class PasswordInputView: UIView {
 
     @objc func touchDown() {
         //delegate callback
-        delegate?.passwordInputView(self, tappedString: numberString)
+        delegate?.passwordInputView(self, tappedString: numberString == "" ? "0" : numberString)
         
         //now touch down, so set touch up flag --> false
         touchUpFlag = false
@@ -121,7 +121,7 @@ open class PasswordInputView: UIView {
         let circleRadius = radius - borderWidth
         
         //update label
-        label.text = numberString
+        label.text = numberString == "" ? "0" : numberString
         
         label.font = getLabelFont()
         
@@ -161,7 +161,7 @@ private extension PasswordInputView {
         button.isExclusiveTouch = true
         button.addTarget(self, action: #selector(PasswordInputView.touchDown), for: [.touchDown])
         button.addTarget(self, action: #selector(PasswordInputView.touchUp), for: [.touchUpInside, .touchDragOutside, .touchCancel, .touchDragExit])
-        button.accessibilityValue = numberString
+        button.accessibilityValue = numberString == "" ? "0" : numberString
     }
     
     //MARK: Animation
